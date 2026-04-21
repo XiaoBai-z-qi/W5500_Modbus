@@ -158,8 +158,15 @@ void DebugMon_Handler(void)
   */ 
 
 __weak void bsp_usart1_IRQHandler(void) { }
+__weak void port_w5500_IRQHandler(void) { }
 
 void DMA2_Stream7_IRQHandler(void)
 {
     bsp_usart1_IRQHandler();
 }
+
+void EXTI2_IRQHandler(void)
+{
+    port_w5500_IRQHandler();
+}
+

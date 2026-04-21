@@ -22,7 +22,7 @@ static void port_cs_rst_gpioinit(void);
 static void port_w5500_spiinit(void);
 static uint8_t port_w5500_readbyte(void);
 static void port_w5500_writebyte(uint8_t byte);
-
+static void port_w5500_intinit(void);
 
 wiz_NetInfo netInfo = {
     .mac = {0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF},
@@ -73,6 +73,7 @@ uint8_t DNS_buffer[512];
 
 int W5500_Init(void)
 {
+	port_w5500_intinit();
     port_cs_rst_gpioinit();
     port_w5500_spiinit();
     uint8_t memsize[2][8] = {{2,2,2,2,2,2,2,2},{2,2,2,2,2,2,2,2}};
@@ -222,6 +223,36 @@ static void port_w5500_spiinit(void)
     SPI_Init(SPI1, &SPI_InitStructure);
 
     SPI_Cmd(SPI1, ENABLE);
+}
+
+static void port_w5500_intinit(void)
+{
+
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+
+
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.GPIO_Pin = GPIO_Pin_2;
+    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;  // 可改为 GPIO_PuPd_UP / DOWN
+    GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource2);
+
+    EXTI_InitTypeDef EXTI_InitStruct;
+    EXTI_InitStruct.EXTI_Line = EXTI_Line2;
+    EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
+    EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Falling;   // 下降沿触发
+    EXTI_InitStruct.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStruct);
+
+    NVIC_InitTypeDef NVIC_InitStruct;
+    NVIC_InitStruct.NVIC_IRQChannel = EXTI2_IRQn;
+    NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0x06;  // 抢占优先级
+    NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0x00;         // 子优先级
+    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStruct);
 }
 
 static uint8_t port_w5500_readbyte(void)

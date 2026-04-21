@@ -5,13 +5,16 @@
 /* Private includes ----------------------------------------------------------*/
 #include "task_printf.h"
 #include "port_wizchip.h"
+#include "task_modbus_tcp.h"
 void default_Task(void *pvParameters);
 
 void MX_FREERTOS_Init(void)
 {
     /* Create the default task */
     xTaskCreate(Printf_Task, "Printf_Task", 256, NULL, 2, NULL);
-    xTaskCreate(default_Task, "default_Task", 512, NULL, 1, NULL);
+    //xTaskCreate(default_Task, "default_Task", 512, NULL, 1, NULL);
+	xTaskCreate(Modbus_TCP_Task, "Modbus", 512, NULL, 1, NULL);
+	
 }
 
 void default_Task(void *pvParameters)

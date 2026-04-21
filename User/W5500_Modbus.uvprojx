@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F411xE,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\bsp;..\platform;..\Drivers\CMSIS;..\Drivers\stm32f4xx\Inc;..\Drivers\stm32f4xx\Src;..\Drivers\w5500;..\Drivers\w5500\DHCP;..\Drivers\w5500\DNS;..\Drivers\w5500\W5500;..\FreeRTOS\Src;..\FreeRTOS\Inc;.\task</IncludePath>
+              <IncludePath>..\User;.\task;..\bsp;..\platform;..\Drivers\CMSIS;..\Drivers\stm32f4xx\Inc;..\Drivers\stm32f4xx\Src;..\Drivers\w5500;..\Drivers\w5500\DHCP;..\Drivers\w5500\DNS;..\Drivers\w5500\W5500;..\Drivers\modbus_tcp\tcp;..\Drivers\modbus_tcp\include;..\Drivers\modbus_tcp\functions;..\FreeRTOS\Src;..\FreeRTOS\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -410,6 +410,11 @@
               <FileType>1</FileType>
               <FilePath>.\task\task_printf.c</FilePath>
             </File>
+            <File>
+              <FileName>task_modbus_tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task\task_modbus_tcp.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -434,6 +439,96 @@
               <FileName>port_wizchip.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\platform\port_wizchip.c</FilePath>
+            </File>
+            <File>
+              <FileName>port_modbus_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\platform\port_modbus_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>port_modbus_tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\platform\port_modbus_tcp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/w5500</GroupName>
+          <Files>
+            <File>
+              <FileName>socket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\w5500\socket.c</FilePath>
+            </File>
+            <File>
+              <FileName>wizchip_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\w5500\wizchip_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>w5500.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\w5500\W5500\w5500.c</FilePath>
+            </File>
+            <File>
+              <FileName>dns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\w5500\DNS\dns.c</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\w5500\DHCP\dhcp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/Modbus_TCP</GroupName>
+          <Files>
+            <File>
+              <FileName>mb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mb.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbtcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\tcp\mbtcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfunccoils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfunccoils.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncdiag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfuncdiag.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncdisc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfuncdisc.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncholding.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfuncholding.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncinput.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfuncinput.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbfuncother.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbfuncother.c</FilePath>
+            </File>
+            <File>
+              <FileName>mbutils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\modbus_tcp\functions\mbutils.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -480,6 +575,11 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\stm32f4xx\Src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_syscfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\stm32f4xx\Src\stm32f4xx_syscfg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -489,36 +589,6 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\CMSIS\system_stm32f4xx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/w5500</GroupName>
-          <Files>
-            <File>
-              <FileName>socket.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\w5500\socket.c</FilePath>
-            </File>
-            <File>
-              <FileName>wizchip_conf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\w5500\wizchip_conf.c</FilePath>
-            </File>
-            <File>
-              <FileName>w5500.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\w5500\W5500\w5500.c</FilePath>
-            </File>
-            <File>
-              <FileName>dns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\w5500\DNS\dns.c</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Drivers\w5500\DHCP\dhcp.c</FilePath>
             </File>
           </Files>
         </Group>
